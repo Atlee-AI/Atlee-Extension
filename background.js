@@ -1,9 +1,10 @@
 function fetchAndPostHistory() {
     chrome.history.search({ text: '', maxResults: 10 }, function (data) {
-      fetch('localhost:3000/receive-data', {
+      fetch('http://127.0.0.1:3000/store-history', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
         body: JSON.stringify(data),
       })
@@ -14,6 +15,3 @@ function fetchAndPostHistory() {
       chrome.runtime.sendMessage({ historyData: data });
     });
   }
-  
-  // Fetch and post history every 10 seconds
-  setInterval(fetchAndPostHistory, 10000);
